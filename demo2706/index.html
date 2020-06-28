@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<htmt>
+    <head>
+        <script src="script.js"></script>
+        <style>
+            .left {
+                text-align: center;
+            }
+            .thumb {
+                display: flex;
+            }
+
+            .thumb > div {
+                width:20%;
+            }
+            .thumb > div img {
+                width:100%;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="right">
+            <img src="images/sliver/Maple-Gold-.jpg" alt="gold" onclick="changeColor('Gold_')" />
+            <img src="images/sliver/Arctic-Silver.jpg" alt="silver" onclick="changeColor('Silver_')" />
+            <img src="images/sliver/Midnight-Black.jpg" alt="black" onclick="changeColor('Black_')" />
+            <img src="images/sliver/Coral-Blue.jpg" alt="blue" onclick="changeColor('Blue_')" />
+        </div>
+        <div class="left">
+            <div><img src="images/galaxys8/Gold_1.jpg" alt="aaa" id="mainImg" /></div>
+            <div class="thumb">
+                <div><img src="images/galaxys8/Gold_1.jpg" onclick="changeImg(this)" /></div>
+                <div><img src="images/galaxys8/Gold_2.jpg" onclick="changeImg(this)" /></div>
+                <div><img src="images/galaxys8/Gold_3.jpg" onclick="changeImg(this)" /></div>
+                <div><img src="images/galaxys8/Gold_4.jpg" onclick="changeImg(this)" /></div>
+                <div><img src="images/galaxys8/Gold_5.jpg" onclick="changeImg(this)" /></div>
+            </div>
+        </div>
+        <input type="text" 
+                id="weightId" 
+                placeholder="Weight = " />
+        <br><br>
+        <input type="text" 
+                id="heightId" 
+                placeholder="Height = " />
+        <br><br>
+        <input type="button" 
+               value="Execute"
+               onclick="execute()" />
+        <h1 id="ketQuaId"></h1>
+
+        <h1>EXCHANGE CURRENCIES</h1>
+        <input type="text" 
+                id="amountId" 
+                placeholder="Amount = " />
+        <br><br>
+        <select id="currencyId">
+            <option value="eur">EUR</option>
+            <option value="usd">USD</option>
+            <option value="aud">AUD</option>
+        </select>
+        <br><br>
+        <input type="button" value="Exchange" onclick="exchange()" />
+        <h1 id="ketQuaId2"></h1>
+    </body>
+</htmt>
