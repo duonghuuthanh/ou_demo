@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+        <script src="js/jquery-3.5.1.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $.ajax({
+                    url: "https://5efaff6280d8170016f75d51.mockapi.io/api/categories",
+                    type: "post",
+                    data: {
+                        "id": "9",
+                        "name": "TEST"
+                    }
+                }).done((res) => {
+                    console.info(res);
+                }).fail((err) => {
+                    console.info(err);
+                });
+
+                $.ajax({
+                    url: "https://5efaff6280d8170016f75d51.mockapi.io/api/categories"
+                }).done((res) => {
+                    console.info(res);
+                }).fail((err) => {
+                    console.info(err);
+                });
+            });
+            function addMonth() {
+                let months = document.querySelectorAll(".data > div");
+                if (months.length < 12) {
+                    let data = document.getElementsByClassName("data")[0];
+                    data.innerHTML += 
+                        `<div>
+                            <input type="text" placeholder="Month ${months.length + 1}" />
+                        </div>`;
+                } else {
+                    alert("Full 12 months!!!");
+                }
+            }
+
+            function drawChart() {
+                const COLORS = ["red", "green", "blue", "yellow", "lightblue", "gold", 
+                "coral", "lightgreen", "darkblue", "brown", "gray", "darkgreen"];
+
+                let ctx = document.getElementById("myStats").getContext("2d");
+                ctx.clearRect(0, 0, 200, 100);
+
+                let data = [];
+                document.querySelectorAll(".data > div > input").forEach((v, idx) => {
+                    data.push({
+                        label: v.placeholder,
+                        data: [v.value],
+                        backgroundColor: COLORS[idx]
+                    });
+                });
+
+                let chart = new Chart(ctx, {
+                    type: "line",
+                    data: {
+                        labels: ["REVENUS STATS"],
+                        datasets: data
+                    }
+                });
+            }
+        </script>
+        <style>
+            body {
+                display: flex;
+            }
+            .left {
+                width:20%;
+            }
+            .right {
+                width: 60%;
+            }
+
+            input[type=text] {
+                width:200px;
+                height:30px;
+                margin-bottom: 2px;
+            }
+
+            input[type=button] {
+                height:30px;
+                width:100px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="left">
+            <div class="data">
+                <div>
+                    <input type="text" placeholder="Month 1" />
+                </div>
+                <div>
+                    <input type="text" placeholder="Month 2" />
+                </div>
+                <div>
+                    <input type="text" placeholder="Month 3" />
+                </div>
+            </div>
+            <div>
+                <input type="button" value="Add Month" onclick="addMonth()" />
+                <input type="button" value="Draw Chart" onclick="drawChart()" />
+            </div>
+        </div>
+        <div class="right">
+            <canvas width="200" height="100" id="myStats"></canvas>
+        </div>
+    </body>
+</html>

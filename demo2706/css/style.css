@@ -1,0 +1,13 @@
+.left {
+    text-align: center;
+}
+.thumb {
+    display: flex;
+}
+
+.thumb > div {
+    width:20%;
+}
+.thumb > div img {
+    width:100%;
+}
