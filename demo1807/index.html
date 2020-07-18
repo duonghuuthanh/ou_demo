@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>DEMO</title>
+        <script src="jquery-3.5.1.min.js"></script>
+        <script>
+            $(document).ready(() => {
+                var products = [];
+                async function readProduct() {
+                    const pro = await fetch("data/products.json");
+                    const res = await pro.json();
+                    console.info(res);
+
+                    let msg = "";
+                    res.forEach(p => {
+                        products.push(p);
+                        msg += `<li>${p.id} - ${p.name}</li>`;
+                    });
+
+                    $("#productListId").html(msg);
+                }
+
+                readProduct();
+
+                function filterUniqueProducts(filterCallBack) {
+                    let kq = products.reduce((re, p) => {
+                        if (!re.some(r => filterCallBack(r, p)))
+                            re.push(p);
+
+                        return re;
+                    }, []);
+                    console.info(kq);
+                }
+
+                let filterById = (p1, p2) => p1.id == p2.id;
+                let filterByName = (p1, p2) => p1.name == p2.name;
+
+                $("#filterId").click(() => {
+                    filterUniqueProducts(filterById);
+                });
+
+                
+
+                async function loadData() {
+                    console.info("=== AWAIT & ASYNC")
+                    const d = await fetch("https://5efaff6280d8170016f75d51.mockapi.io/api/dicts")
+                    const res = await d.json();
+                    console.info(res);
+                    console.info("DONE");
+                }
+
+                loadData();
+
+                // fetch("https://5efaff6280d8170016f75d51.mockapi.io/api/dicts")
+                // .then(res => res.json()).then(d => {
+                //     let msg = "";
+                //     d.forEach(element => {
+                //         msg += `<li>${element.word}: ${element.vi_mean}</li>`;
+                //     });
+
+                //    $("#dictsId").html(msg); 
+                // });
+
+                $("#btnLoad").click(() => {
+                    $.ajax({
+                        url: "https://5efaff6280d8170016f75d51.mockapi.io/api/dicts"
+                    }).done(res => {
+                        let msg = "";
+                        res.forEach(element => {
+                            msg += `<li>${element.word}: ${element.vi_mean}</li>`;
+                        });
+
+                       $("#dictsId").html(msg); 
+                    }).fail(err => {
+                       console.error(err);
+                    });
+                })
+                
+                $("#loadId").click(() => {
+                    $.ajax("data/words.json").done(res => {
+                        let msg = "";
+                        for (let w in res)
+                            msg += `<li>${w}: ${res[w]}</li>`;
+
+                        $("#wordsId").html(msg);
+                    }).fail(err => {
+
+                    });
+                });
+
+                let addWord = (w, vi) => {
+                    $.ajax({
+                        url: "https://5efaff6280d8170016f75d51.mockapi.io/api/dicts",
+                        type: "post",
+                        data: {
+                            word: w,
+                            vi_mean: vi
+                        }
+                    }).done(res => {
+                        console.info(res);
+                    }).fail(err => {
+                        console.error(err);
+                    })
+                }
+
+                async function addW() {
+                    const re = await fetch('https://5efaff6280d8170016f75d51.mockapi.io/api/dicts', {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            word: "test",
+                            vi_mean: "kiem tra"
+                        }),
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    });
+                    try {
+                        const res = await re.json();
+                    } catch {
+                        
+                    }
+                    
+
+                    console.info(res);
+                }
+
+                $("#fetchId").click(() => {
+                    addW();
+                    // fetch('https://5efaff6280d8170016f75d51.mockapi.io/api/dicts', {
+                    //     method: 'POST',
+                    //     body: JSON.stringify({
+                    //         word: "test",
+                    //         vi_mean: "kiem tra"
+                    //     }),
+                    //     headers: {
+                    //         "Content-Type": "application/json"
+                    //     }
+                    // }).then(res => res.json()).then(res => console.info(res)).catch(err => console.error(err));
+                });
+
+                $("#addId").click(() => {
+                    $.ajax("data/words.json").done(res => {
+                        // let msg = "";
+                        for (let w in res)
+                            addWord(w, res[w]);
+
+                        // $("#wordsId").html(msg);
+                    }).fail(err => {
+
+                    });
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <input type="button" value="FILTER UNIQUE" id="filterId" />
+        <ul id="productListId">
+
+        </ul>
+        <hr>
+        <input type="button" value="LOAD DICTS" id="btnLoad" />
+        <ul id="dictsId">
+
+        </ul>
+        <input type="button" value="LOAD JSON" id="loadId" />
+        <input type="button" value="ADD WORDS TO DICTS" id="addId" />
+        <input type="button" value="FETCH DEMO" id="fetchId" />
+        <ul id="wordsId">
+
+        </ul>
+    </body>
+</html>
