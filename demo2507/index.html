@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+        <script type="module" src="main.js"></script>
+        <script>
+            
+            function init() {
+                window.drawChart();
+               
+                window.displayCategory(cat => {
+                    return `<li class="nav-item">
+                                <a class="nav-link" onclick="window.displayItems(window.itemDefault, ${cat.id})" href="#">${cat.name}</a>
+                          </li>`;
+                });
+
+                window.displayItems(window.itemDefault);
+            }
+        </script>
+    </head>
+    <body onload="init()">
+        <canvas id="myChart" width="400" height="400"></canvas>
+
+        <section class="container"> 
+            <nav class="navbar navbar-expand-sm bg-light">
+                <ul class="navbar-nav" id="cateId">
+                  
+                </ul>
+            </nav>
+            <section>
+                <input type="button" onclick="window.displayItems(window.itemDefault, -1, window.sortByName)" class="btn btn-info" value="Sort By Name (ASC)" />
+                <input type="button" onclick="window.displayItems(window.itemDefault, -1, window.sortByAmount)" class="btn btn-success" value="Sort By Amount (DESC)" />
+            </section>
+            <section>
+                <table class="table" id="itemId">
+                    
+                </table>
+            </section>
+        </section>
+    </body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script type="module" src="main.js"></script>
+        <script>
+            function init() {
+                window.displayCategory(cat => {
+                    return `<option value="${cat.id}">${cat.name}</option>`;
+                });
+            }
+        </script>
+    </head>
+    <body onload="init()">
+        <section class="container">
+            <h1 class="text-center">QUAN LY CHI TIEU</h1>
+            <div class="form-group">
+                <label>Ten chi tieu</label>
+                <input type="text" id="nameId" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>So tien</label>
+                <input type="number" id="amountId" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Danh muc</label>
+                <select id="cateId" class="form-control">
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="button" onclick="window.addItemView()" class="btn btn-danger" value="Them chi tieu" />
+            </div>
+        </section>
+    </body>
+</html>
