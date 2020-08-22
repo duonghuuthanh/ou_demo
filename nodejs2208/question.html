@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <script>
+            function showQuestion() {
+                var p = "http://127.0.0.1:8085/api/questions"
+                var kw = document.getElementById("keyword")
+                if (kw.value != "")
+                    p += `?keyword=${kw.value}`
+
+                fetch(p).then(res => res.json()).then(data => {
+                    var d = document.getElementById('question')
+                    d.innerHTML = ""
+                    data.forEach(question => {
+                        d.innerHTML += `<tr>
+                                            <td>${question.content}</td>
+                                            <td>${question.a}</td>
+                                            <td>${question.b}</td>
+                                            <td>${question.c}</td>
+                                            <td>${question.d}</td>
+                                            <td>${question.answer}</td>
+                                        </tr>`;
+                    });
+                }).catch(err => {
+                    console.info(err)
+                })
+            }
+
+            function init() {
+                showQuestion()
+            }
+        </script>
+    </head>
+    <body onload="init()">
+        <h1 class="text-center text-info">QUESTION MANAGEMENT</h1>
+        <div class="container">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-11">
+                        <input type="text" id="keyword" placeholder="Enter keyword..." class="form-control" />
+                    </div>
+                    <div class="col-md-1">
+                        <input type="button" onclick="showQuestion()"  value="Search" class="btn btn-info" />
+                    </div>
+                </div>
+            </div>
+            <table class="table">
+                <tr>
+                    <td>Content</td>
+                    <td>A</td>
+                    <td>B</td>
+                    <td>C</td>
+                    <td>D</td>
+                    <td>Answer</td>
+                </tr>
+                <tbody id="question">
+    
+                </tbody>
+            </table>
+        </div>
+        
+    </body>
+</html>

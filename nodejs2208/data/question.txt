@@ -1,0 +1,15 @@
+[{
+    "content": "This is ... book",
+    "a": "my",
+    "b": "mine",
+    "c": "me",
+    "d": "myself",
+    "answer": "a"
+}, {
+    "content": "I wish he ... a doctor",
+    "a": "was",
+    "b": "were",
+    "c": "are",
+    "d": "is",
+    "answer": "b"
+}]
